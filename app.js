@@ -1,4 +1,4 @@
-// Variables
+// VARIABLES
 const form = document.querySelector('#task-form');
 const taskList = document.querySelector('.list-group');
 const clearBtn = document.querySelector('.clear-tasks');
@@ -37,8 +37,8 @@ function addTask(e) {
 
   const li = document.createElement('li');
   //Add class
+  li.className = 'list-group-item d-flex justify-content-between align-items-center listItem'
 
-  li.className = 'list-group-item d-flex justify-content-between align-items-center';
   //Create text for li
 
   li.textContent = taskInput.value
@@ -68,7 +68,8 @@ function addTask(e) {
   </li>
   */
 
-
+  // Store in LS //5)
+  storeTaskInLocalStorage(taskInput.value);
 
   // Clear input
   taskInput.value = '';
@@ -82,7 +83,8 @@ function removeTask(e) {
     if(confirm('Are You Sure?')) {
       e.target.parentElement.parentElement.remove();
 
-
+      //Remove From localStorage
+      removeTaskFromLocalStorage(e.target.parentElement.parentElement);
     }
   }
 }
@@ -97,18 +99,32 @@ function clearTasks(){
 
 
 
-
 // 4) Filter Tasks
-
 function filterTasks(e) {
-  const text = e.target.value.toLowerCase();
+  const searchValue = e.target.value.toLowerCase();
 
-  document.querySelectorAll('.list-group-item').forEach(function(task){
+  document.querySelectorAll('.listItem').forEach(function(task){
     const item = task.firstChild.textContent;
-    if(item.toLowerCase().indexOf(text) != -1){
+    if(item.toLowerCase().indexOf(searchValue) != -1){
       task.style.display = 'block';
     } else {
       task.style.display = 'none';
     }
   });
+}
+
+// 5) STORE TASK IN LOCALSTORAGE
+
+
+function storeTaskInLocalStorage(task) {
+  let tasks;
+  if(localStorage.getItem('tasks') === null){
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+  }
+
+  tasks.push(task);
+
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 }
