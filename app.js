@@ -40,7 +40,8 @@ function addTask(e) {
   // Create li element
     const li = document.createElement('li');
     // Add class
-    li.className = 'list-group-item d-flex justify-content-between align-items-center listItem';
+    li.className = 'list-group-item';
+
     // Create text node and append to li
     li.appendChild(document.createTextNode(taskInput.value));
     // Create new link element
@@ -86,6 +87,8 @@ function clearTasks(){
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild)
   }
+  //CLEAR ALL TASKS FROM LOCALSTORAGE
+  clearTasksFromLocalStorage()
 }
 
 
@@ -94,7 +97,7 @@ function clearTasks(){
 function filterTasks(e) {
   const searchValue = e.target.value.toLowerCase();
 
-  document.querySelectorAll('.listItem').forEach(function(task){
+  document.querySelectorAll('.list-group-item').forEach(function(task){
     const item = task.firstChild.textContent;
     if(item.toLowerCase().indexOf(searchValue) != -1){
       task.style.display = 'block';
@@ -137,7 +140,8 @@ function getTasks(){
     // Create li element
       const li = document.createElement('li');
       // Add class
-      li.className = 'list-group-item d-flex justify-content-between align-items-center listItem';
+      li.className = 'list-group-item';
+
       // Create text node and append to li
       li.appendChild(document.createTextNode(task));
       // Create new link element
@@ -172,4 +176,10 @@ function removeTaskFromLocalStorage(taskItem) {
   });
 
   localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+//8) CLEAR ALL TASKS FROM LOCALSTORAGE
+
+function clearTasksFromLocalStorage(){
+  localStorage.clear()
 }
