@@ -83,8 +83,7 @@ function removeTask(e) {
     if(confirm('Are You Sure?')) {
       e.target.parentElement.parentElement.remove();
 
-      //Remove From localStorage
-      removeTaskFromLocalStorage(e.target.parentElement.parentElement);
+
     }
   }
 }
